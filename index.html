@@ -285,4 +285,103 @@
         <p style="margin-top: 10px;">🌐 <a href="https://gen-e1799.start.page/" style="color: #00ff41;">gen-e1799.start.page</a></p>
     </footer>
 </body>
+    
+    <!-- Web3 Integration -->
+    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
+    <script>
+        // Web3 Wallet Connection
+        let provider;
+        let signer;
+        let userAddress;
+
+        // MetaMask Connection
+        async function connectWallet() {
+            if (typeof window.ethereum !== 'undefined') {
+                try {
+                    await window.ethereum.request({ method: 'eth_requestAccounts' });
+                    provider = new ethers.providers.Web3Provider(window.ethereum);
+                    signer = provider.getSigner();
+                    userAddress = await signer.getAddress();
+                    
+                    document.getElementById('wallet-address').textContent = 
+                        userAddress.substring(0, 6) + '...' + userAddress.substring(38);
+                    document.getElementById('connect-wallet-btn').style.display = 'none';
+                    document.getElementById('wallet-info').style.display = 'block';
+                    
+                    console.log('✅ Wallet connected:', userAddress);
+                    return true;
+                } catch (error) {
+                    console.error('❌ Error connecting wallet:', error);
+                    alert('Errore di connessione al wallet. Assicurati di avere MetaMask installato.');
+                    return false;
+                }
+            } else {
+                alert('MetaMask non trovato! Installa MetaMask per connetterti.');
+                window.open('https://metamask.io/download/', '_blank');
+                return false;
+            }
+        }
+
+        // Direct Marketplace Links with Wallet Check
+        async function openMarketplace(marketplace, collectionUrl) {
+            const connected = userAddress || await connectWallet();
+            if (connected) {
+                window.open(collectionUrl, '_blank');
+            }
+        }
+
+        // Marketplace URLs
+        const marketplaces = {
+            superrare: 'https://superrare.com/gen_e1799',
+            zora: 'https://zora.co/@gene1799',
+            opensea: 'https://opensea.io/gen_e1799',
+            rarible: 'https://og.rarible.com/gen_e1799/owned',
+            foundation: 'https://foundation.app/@gen_e1799',
+            crypto: 'https://crypto.com/nft/profile/gen_e1799?tab=created'
+        };
+
+        // Add event listeners when DOM is loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add Web3 buttons to marketplace section
+            const nftLinksContainer = document.querySelector('.nft-links');
+            if (nftLinksContainer) {
+                nftLinksContainer.innerHTML = `
+                    <button id="connect-wallet-btn" class="btn" onclick="connectWallet()" style="background: #00ff41; color: #0a0e27; font-weight: bold;">🦊 Connect MetaMask</button>
+                    <div id="wallet-info" style="display: none; background: rgba(0, 255, 65, 0.1); border: 2px solid #00ff41; padding: 15px; margin: 20px 0; text-align: center;">
+                        <p style="font-size: 1.2em; margin-bottom: 10px;">✅ Wallet Connected</p>
+                        <p style="font-size: 1em;">Address: <span id="wallet-address"></span></p>
+                    </div>
+                    <a href="#" class="btn" onclick="openMarketplace('zora', marketplaces.zora); return false;">🌐 Buy on Zora</a>
+                    <a href="#" class="btn" onclick="openMarketplace('superrare', marketplaces.superrare); return false;">💎 Buy on SuperRare</a>
+                    <a href="#" class="btn" onclick="openMarketplace('opensea', marketplaces.opensea); return false;">🌊 Buy on OpenSea</a>
+                    <a href="#" class="btn" onclick="openMarketplace('rarible', marketplaces.rarible); return false;">🎨 Buy on Rarible</a>
+                    <a href="#" class="btn" onclick="openMarketplace('foundation', marketplaces.foundation); return false;">🏛️ Buy on Foundation</a>
+                    <a href="#" class="btn" onclick="openMarketplace('crypto', marketplaces.crypto); return false;">💰 Buy on Crypto.com</a>
+                `;
+            }
+
+            // Check if wallet is already connected
+            if (typeof window.ethereum !== 'undefined') {
+                window.ethereum.request({ method: 'eth_accounts' })
+                    .then(accounts => {
+                        if (accounts.length > 0) {
+                            connectWallet();
+                        }
+                    });
+            }
+        });
+
+        // Listen for account changes
+        if (typeof window.ethereum !== 'undefined') {
+            window.ethereum.on('accountsChanged', function (accounts) {
+                if (accounts.length > 0) {
+                    connectWallet();
+                } else {
+                    document.getElementById('connect-wallet-btn').style.display = 'block';
+                    document.getElementById('wallet-info').style.display = 'none';
+                    userAddress = null;
+                }
+            });
+        }
+    </script>
 </html>
