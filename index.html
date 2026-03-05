@@ -4,388 +4,313 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="Gene1799 Art Corporatione - International Digital Artist, NFT Creator, Web3 Builder. Marco Antonio Saverio Mazzitelli">
-    <title>Gene1799 Art Corporatione | NFT & Digital Art</title>
+    <title>Gene1799 Art Corporatione | Official Portal</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.7.0/ethers.umd.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        :root {
+            --green: #00ff41;
+            --dark-green: #003300;
+            --bg: #030303;
+            --panel: rgba(0, 255, 65, 0.08);
+            --glow: 0 0 15px rgba(0, 255, 65, 0.6);
         }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         body {
-            font-family: 'Courier New', monospace;
-            background: linear-gradient(135deg, #0a0e27 0%, #1a1f3a 100%);
-            color: #00ff41;
+            background-color: var(--bg);
+            color: var(--green);
+            font-family: 'Share Tech Mono', monospace;
             overflow-x: hidden;
+            background-image: linear-gradient(rgba(0, 255, 65, 0.05) 1px, transparent 1px),
+                              linear-gradient(90deg, rgba(0, 255, 65, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
         }
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
+
+        .terminal-header {
             padding: 20px;
-        }
-        header {
-            text-align: center;
-            padding: 60px 20px;
-            background: rgba(0, 255, 65, 0.05);
-            border-bottom: 3px solid #00ff41;
-            margin-bottom: 40px;
-            animation: glitch 3s infinite;
-        }
-        @keyframes glitch {
-            0%, 100% { text-shadow: 0 0 10px #00ff41; }
-            50% { text-shadow: 0 0 20px #00ff41, 0 0 30px #00ff41; }
-        }
-        h1 {
-            font-size: 3.5em;
-            margin-bottom: 20px;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-        }
-        .subtitle {
-            font-size: 1.4em;
-            color: #1aff3a;
-            margin-bottom: 30px;
-        }
-        .cta-buttons {
+            background: #000;
+            border-bottom: 2px solid var(--green);
             display: flex;
-            justify-content: center;
-            gap: 20px;
-            flex-wrap: wrap;
-            margin-top: 30px;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
         }
+
+        .verified-badge {
+            background: var(--green);
+            color: #000;
+            padding: 2px 10px;
+            font-weight: bold;
+            font-size: 0.8rem;
+            border-radius: 4px;
+        }
+
+        .container { max-width: 1400px; margin: 0 auto; padding: 40px 20px; }
+
+        .hero {
+            text-align: center;
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .logo-frame {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            background: #000;
+            border: 3px solid var(--green);
+            border-radius: 50%;
+            padding: 5px;
+            box-shadow: var(--glow);
+            animation: pulse 2s infinite ease-in-out;
+            overflow: hidden;
+        }
+
+        .logo-frame img {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 4rem;
+            text-transform: uppercase;
+            letter-spacing: 10px;
+            margin-bottom: 10px;
+            text-shadow: var(--glow);
+        }
+
+        .glitch-text { animation: glitch 3s infinite; }
+
+        .section-header {
+            border-left: 5px solid var(--green);
+            padding-left: 15px;
+            margin: 80px 0 40px;
+            font-size: 1.8rem;
+            text-transform: uppercase;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        .art-card {
+            background: var(--panel);
+            border: 1px solid rgba(0, 255, 65, 0.2);
+            padding: 15px;
+            transition: 0.4s;
+            position: relative;
+        }
+
+        .art-card:hover {
+            border-color: var(--green);
+            background: rgba(0, 255, 65, 0.12);
+            transform: scale(1.02);
+        }
+
+        .art-card img {
+            width: 100%;
+            height: auto;
+            border: 1px solid var(--green);
+            margin-bottom: 15px;
+        }
+
+        .card-meta { font-size: 0.9rem; }
+        .card-title { font-weight: bold; margin-bottom: 5px; color: #fff; }
+
         .btn {
             background: transparent;
-            border: 2px solid #00ff41;
-            color: #00ff41;
-            padding: 12px 30px;
-            text-decoration: none;
-            font-family: 'Courier New', monospace;
-            font-size: 1.1em;
-            font-weight: bold;
-            transition: all 0.3s;
+            border: 1px solid var(--green);
+            color: var(--green);
+            padding: 10px 20px;
             cursor: pointer;
+            font-family: inherit;
             text-transform: uppercase;
+            text-decoration: none;
+            display: inline-block;
+            transition: 0.3s;
         }
-        .btn:hover {
-            background: #00ff41;
-            color: #0a0e27;
-            box-shadow: 0 0 20px #00ff41;
-        }
-        .token-card {
-            background: rgba(0, 255, 65, 0.1);
-            border: 2px solid #00ff41;
-            padding: 30px;
-            margin: 40px 0;
-            text-align: center;
-        }
-        .token-card h2 {
-            font-size: 2.2em;
-            margin-bottom: 20px;
-        }
-        .token-info {
-            font-size: 1.1em;
-            line-height: 1.8;
-        }
-        .section {
-            margin: 60px 0;
-        }
-        .section h2 {
-            font-size: 2.5em;
-            margin-bottom: 30px;
-            border-left: 5px solid #00ff41;
-            padding-left: 20px;
-        }
-        .exhibitions-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 30px;
-        }
-        .exhibition-card {
-            background: rgba(0, 255, 65, 0.08);
-            border: 2px solid #00ff41;
-            padding: 25px;
-            transition: all 0.3s;
-        }
-        .exhibition-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 255, 65, 0.3);
-        }
-        .exhibition-card h3 {
-            font-size: 1.6em;
-            margin-bottom: 15px;
-            color: #1aff3a;
-        }
-        .nft-links {
+
+        .btn:hover { background: var(--green); color: #000; box-shadow: var(--glow); }
+
+        .btn-connect { border-radius: 20px; font-weight: bold; }
+
+        .timeline {
             display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin: 30px 0;
-        }
-        .social-links {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            justify-content: center;
-            margin: 30px 0;
-        }
-        .tech-stack {
-            background: rgba(0, 255, 65, 0.05);
-            padding: 30px;
-            border: 2px solid #00ff41;
-            margin-top: 30px;
-        }
-        .tech-stack code {
-            display: block;
-            background: #0a0e27;
+            flex-direction: column;
+            gap: 20px;
             padding: 20px;
-            margin: 10px 0;
-            border-left: 3px solid #00ff41;
-            font-size: 1em;
-            overflow-x: auto;
-        }
-        footer {
-            text-align: center;
-            padding: 40px 20px;
-            border-top: 3px solid #00ff41;
-            margin-top: 60px;
             background: rgba(0, 255, 65, 0.05);
+            border: 1px dashed var(--green);
         }
-        .ascii-art {
-            font-size: 0.7em;
-            line-height: 1.2;
-            white-space: pre;
-            margin: 20px 0;
+
+        .timeline-item {
+            display: flex;
+            gap: 20px;
+            padding: 10px;
+            border-bottom: 1px solid rgba(0, 255, 65, 0.1);
         }
+
+        .year { font-weight: bold; min-width: 60px; color: #fff; }
+
+        .bot-section {
+            background: linear-gradient(90deg, #0088cc 0%, transparent 100%);
+            padding: 40px;
+            border: 1px solid #0088cc;
+            margin-top: 60px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 80px 20px;
+            background: #000;
+            border-top: 2px solid var(--green);
+        }
+
+        @keyframes pulse {
+            0%, 100% { box-shadow: 0 0 15px rgba(0, 255, 65, 0.4); }
+            50% { box-shadow: 0 0 35px rgba(0, 255, 65, 0.8); }
+        }
+
+        @keyframes glitch {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(-2deg); }
+            21% { transform: skew(10deg); }
+            22% { transform: skew(0deg); }
+            80% { transform: skew(0deg); }
+            81% { transform: skew(5deg); }
+            82% { transform: skew(0deg); }
+        }
+
         @media (max-width: 768px) {
-            h1 { font-size: 2em; }
-            .subtitle { font-size: 1.1em; }
-            .cta-buttons { flex-direction: column; }
+            h1 { font-size: 2.2rem; }
+            .hero { padding: 40px 0; }
+            .bot-section { flex-direction: column; text-align: center; gap: 20px; }
         }
     </style>
 </head>
 <body>
-    <header>
-        <h1>🎨 Gene1799 Art Corporatione</h1>
-        <div class="subtitle">International Digital Artist | NFT Creator | Web3 Builder</div>
-        <p style="font-size: 1.2em;">Marco Antonio Saverio Mazzitelli</p>
-        
-        <div class="cta-buttons">
-            <a href="https://superrare.com/gen_e1799" class="btn" target="_blank">SuperRare</a>
-            <a href="https://zora.co/@gene1799" class="btn" target="_blank">Zora</a>
-            <a href="https://foundation.app/@gen_e1799" class="btn" target="_blank">Foundation</a>
-                        <a href="https://crypto.com/nft/profile/gen_e1799?tab=created" class="btn" target="_blank">Crypto.com NFT</a>
-            <a href="https://gen-e1799.start.page/" class="btn" target="_blank" style="background: #1aff3a; color: #0a0e27; font-weight: bold;">🎨 Portfolio Artistico</a>
+
+<div class="terminal-header">
+    <div>SYSTEM: GENE1799_V1.0_ONLINE</div>
+    <div>
+        <button class="btn btn-connect" id="connectButton">CONNECT_WALLET</button>
+    </div>
+</div>
+
+<div class="container">
+    <header class="hero">
+        <div class="logo-frame">
+            <img src="https://crypto.com/nft/profile/gen_e1799/avatar" alt="Gene1799 Official Logo">
         </div>
+        <h1 class="glitch-text">GENE1799</h1>
+        <p style="font-size: 1.2rem; margin-bottom: 20px;">MARCO ANTONIO SAVERIO MAZZITELLI <span class="verified-badge">VERIFIED ARTIST</span></p>
+        <p style="color: #fff;">Digital Alchemist | Web3 Architect | NFT Creator since 2007</p>
     </header>
 
-    <div class="container">
-        <!-- Token Section -->
-        <div class="token-card">
-            <h2>⛓️ $GENE1799 Token</h2>
-            <div class="token-info">
-                <p><strong>Network:</strong> Base (Chain ID: 8453)</p>
-                <p><strong>Contract:</strong> 0x63800f370b04ce132333c05d811663b80cec788e</p>
-                <a href="https://                <a href="https://birdeye.so/base/token/0x63800F370B04CE132333c05d811663B80CEc788e" class="btn" target="_blank" style="background: #ff9500; color: #0a0e27; font-weight: bold;">🐦 Buy on Birdeye</a>
-                <a href="https://app.uniswap.org/explore/tokens/base/0x63800F370B04CE132333c05d811663B80CEc788e" class="btn" target="_blank" style="background: #ff007a; color: white; font-weight: bold;">🦄 Buy on Uniswap</a>
-                <a href="https://zora.co/@gene1799" class="btn" target="_blank" style="background: #4169e1; color: white; font-weight: bold;">⛓️ Trade on Zora</a>.org/address/0x63800f370b04ce132333c05d811663b80cec788e" class="btn" target="_blank" style="margin-top: 20px; display: inline-block;">View on BaseScan</a>
+    <div class="section-header">>>> EXHIBITION_LOGS</div>
+    <div class="timeline">
+        <div class="timeline-item"><span class="year">2026</span> <span>Beijing Intercontinental Tour | Three Shadows Art Centre</span></div>
+        <div class="timeline-item"><span class="year">2025</span> <span>Paris Exhibition | Galleria Thuillier</span></div>
+        <div class="timeline-item"><span class="year">2024</span> <span>NFT.NYC 2024 | "Avana Syndrome" Times Square Projection</span></div>
+        <div class="timeline-item"><span class="year">2023</span> <span>Miami Basel 23 | "Attacchi di Panico" | Art Innovation Gallery</span></div>
+        <div class="timeline-item"><span class="year">2017</span> <span>Milan | "Gene e Nasa Tech" | Centro LGBT Metro</span></div>
+    </div>
+
+    <div class="section-header">>>> ART_GALLERY</div>
+    <div class="gallery">
+        <div class="art-card">
+            <img src="https://i.superrare.com/0x639c133fd08da81457360670ffd2fc1b4180a021/15/token-transcode.jpg" alt="ARTE del inganno">
+            <div class="card-meta">
+                <div class="card-title">ARTE del inganno e della propotenza</div>
+                <div>Gallery: SuperRare</div>
+                <a href="https://superrare.com/artwork/eth/0x639C133fD08DA81457360670FFd2FC1b4180A021/15" class="btn" style="margin-top:10px; width:100%; text-align:center;">COLLECT_NFT</a>
             </div>
         </div>
-
-        <!-- Exhibitions Section -->
-        <div class="section">
-            <h2>🏛️ International Exhibitions</h2>
-            <div class="exhibitions-grid">
-                <div class="exhibition-card">
-                    <h3>Miami Basel 2023</h3>
-                    <p><strong>Opera:</strong> "Attacchi di Panico"</p>
-                    <p><strong>Galleria:</strong> Art Innovation Gallery</p>
-                    <p><strong>Location:</strong> Miami, USA</p>
-                </div>
-                <div class="exhibition-card">
-                    <h3>NFT.NYC 2024</h3>
-                    <p><strong>Opera:</strong> "Avana Syndrome"</p>
-                    <p><strong>Location:</strong> New York, USA</p>
-                </div>
-                <div class="exhibition-card">
-                    <h3>Oculus NYC 2024</h3>
-                    <p><strong>Event:</strong> Independent & Collective Exhibition</p>
-                    <p><strong>Location:</strong> The Oculus, New York</p>
-                </div>
-                <div class="exhibition-card">
-                    <h3>Beijing Expo 2025</h3>
-                    <p><strong>Event:</strong> International Expo</p>
-                    <p><strong>Location:</strong> Beijing, China</p>
-                </div>
-                <div class="exhibition-card">
-                    <h3>Paris Digital Art Week 2025</h3>
-                    <p><strong>Event:</strong> Digital Art Week</p>
-                    <p><strong>Location:</strong> Paris, France</p>
-                </div>
-                <div class="exhibition-card">
-                    <h3>Annuario Mondadori 2025</h3>
-                    <p><strong>Riconoscimento:</strong> Artisti Contemporanei Internazionali</p>
-                    <p><strong>Pubblicazione:</strong> Mondadori</p>
-                </div>
+        <div class="art-card">
+            <img src="https://i.superrare.com/0x639c133fd08da81457360670ffd2fc1b4180a021/14/token-transcode.jpg" alt="Il Bacio di Giuda">
+            <div class="card-meta">
+                <div class="card-title">Il Bacio di Giuda Iscariota</div>
+                <div>Exposed: NFT.NYC 2024</div>
+                <a href="https://superrare.com/artwork/eth/0x639C133fD08DA81457360670FFd2FC1b4180A021/14" class="btn" style="margin-top:10px; width:100%; text-align:center;">COLLECT_NFT</a>
             </div>
         </div>
-
-        <!-- NFT Marketplaces -->
-        <div class="section">
-            <h2>🖼️ NFT Marketplaces</h2>
-            <div class="nft-links">
-                <a href="https://zora.co/@gene1799" class="btn" target="_blank">Zora</a>
-                <a href="https://superrare.com/gen_e1799" class="btn" target="_blank">SuperRare</a>
-                <a href="https://crypto.com/nft/profile/gen_e1799?tab=created" class="btn" target="_blank">Crypto.com</a>
-                <a href="https://foundation.app/@gen_e1799" class="btn" target="_blank">Foundation</a>
-                <a href="https://opensea.io/gen_e1799" class="btn" target="_blank">OpenSea</a>
-                <a href="https://og.rarible.com/gen_e1799/owned" class="btn" target="_blank">Rarible</a>
+        <div class="art-card">
+            <img src="https://i.superrare.com/0x639c133fd08da81457360670ffd2fc1b4180a021/13/token-transcode.jpg" alt="Giuda Escariota">
+            <div class="card-meta">
+                <div class="card-title">Giuda Escariota</div>
+                <div>Category: Esoteric/Digital</div>
+                <a href="https://superrare.com/artwork/eth/0x639C133fD08DA81457360670FFd2FC1b4180A021/13" class="btn" style="margin-top:10px; width:100%; text-align:center;">COLLECT_NFT</a>
             </div>
         </div>
-
-        <!-- Social Links -->
-        <div class="section">
-            <h2>🔗 Connect</h2>
-            <div class="social-links">
-                <a href="https://www.instagram.com/gen.e1799" class="btn" target="_blank">Instagram</a>
-                <a href="https://x.com/@marco441441" class="btn" target="_blank">Twitter/X</a>
-                <a href="https://discord.gg/n8wd7bW7" class="btn" target="_blank">Discord</a>
-                <a href="https://www.youtube.com/@gene1799artcorporatione" class="btn" target="_blank">YouTube</a>
-                <a href="https://www.tiktok.com/@gen_e1799" class="btn" target="_blank">TikTok</a>
-                <a href="https://www.linkedin.com/in/marco-mazzitelli-704a54130/" class="btn" target="_blank">LinkedIn</a>
-                <a href="https://github.com/gene7919" class="btn" target="_blank">GitHub</a>
+        <div class="art-card">
+            <img src="https://crypto.com/nft/profile/gen_e1799/avatar" alt="Super Hogg">
+            <div class="card-meta">
+                <div class="card-title">Gene_1799 SUPER_DOGG</div>
+                <div>Profile Avatar / Logo</div>
+                <a href="https://crypto.com/nft/profile/gen_e1799" class="btn" style="margin-top:10px; width:100%; text-align:center;">VIEW_PROFILE</a>
             </div>
-        </div>
-
-        <!-- Tech Stack -->
-        <div class="section">
-            <h2>🛠️ Tech Stack</h2>
-            <div class="tech-stack">
-                <code>Frontend: HTML5 / CSS3 / Vanilla JS (Commodore 16 Style)</code>
-                <code>Web3: ethers.js v5 / MetaMask / Base Network</code>
-                <code>Blockchain: Solidity / ERC-20 / ERC-721 / Zora Protocol</code>
-                <code>Backend: Node.js / Express</code>
-                <code>Bot: Telegraf.js (Telegram)</code>
-                <code>Deploy: Render.com / WordPress / GitHub Pages</code>
-                <code>AI: Meta AI / Stable Diffusion / Smartphone Art</code>
-            </div>
-        </div>
-
-        <!-- ASCII Art Footer -->
-        <div class="ascii-art" style="text-align: center;">
-████████████████████████████████████████████
-█ GENE1799 ART CORPORATIONE                █
-█ Marco Antonio Saverio Mazzitelli         █
-█ Fabio Amedeo Lo Presti                   █
-█ 16/A409879L — Arthemis Ludovici Prod.    █
-█ © 2026 All Rights Reserved               █
-████████████████████████████████████████████
         </div>
     </div>
 
-    <footer>
-        <p style="font-size: 1.2em;">✨ Where art meets technology, new worlds are created.</p>
-        <p style="margin-top: 20px;">Digital art, NFTs, AI creativity, and intelligence-driven innovation.</p>
-        <p style="margin-top: 10px;">🌐 <a href="https://gen-e1799.start.page/" style="color: #00ff41;">gen-e1799.start.page</a></p>
-    </footer>
-</body>
+    <div class="bot-section">
+        <div>
+            <h2 style="font-family: 'Orbitron';">GENE1799 ART BOT</h2>
+            <p>INTEGRATED TELEGRAM INTERFACE FOR THE ART CORPORATIONE</p>
+        </div>
+        <a href="https://t.me/GENE1799ART_BOT?start=invito_2143822828" class="btn" style="background: #0088cc; color: #fff; border: none; font-size: 1.2rem;">ACCESS_BOT</a>
+    </div>
+
+    <div class="section-header">>>> WEB3_PROTOCOLS</div>
+    <div style="display: flex; gap: 20px; flex-wrap: wrap;">
+        <a href="https://zora.co/collect/base:0x63800f370b04ce132333c05d811663b80cec788e" class="btn" style="flex: 1; text-align: center;">ZORA_COLLECTIVE</a>
+        <a href="https://birdeye.so/base/token/0x63800F370B04CE132333c05d811663B80CEc788e" class="btn" style="flex: 1; text-align: center;">TOKEN_ANALYTICS</a>
+        <a href="https://app.uniswap.org/explore/tokens/base/0x63800F370B04CE132333c05d811663B80CEc788e" class="btn" style="flex: 1; text-align: center;">UNISWAP_DEX</a>
+    </div>
+</div>
+
+<footer class="footer">
+    <p>GENE1799 ART CORPORATIONE &copy; 2026</p>
+    <p style="margin-top: 10px; font-size: 0.8rem; opacity: 0.6;">Contact: gene1799artcorporatione@gmail.com</p>
+    <div style="margin-top: 30px;">
+        <a href="https://instagram.com/gen.e1799" class="btn" style="margin: 0 5px;">INSTAGRAM</a>
+        <a href="https://x.com/marco441441" class="btn" style="margin: 0 5px;">X_TWITTER</a>
+        <a href="https://gen-e1799.start.page" class="btn" style="margin: 0 5px;">ART_HUB</a>
+    </div>
+</footer>
+
+<script>
+    const connectBtn = document.getElementById('connectButton');
     
-    <!-- Web3 Integration -->
-    <script src="https://cdn.ethers.io/lib/ethers-5.7.umd.min.js"></script>
-    <script>
-        // Web3 Wallet Connection
-        let provider;
-        let signer;
-        let userAddress;
-
-        // MetaMask Connection
-        async function connectWallet() {
-            if (typeof window.ethereum !== 'undefined') {
-                try {
-                    await window.ethereum.request({ method: 'eth_requestAccounts' });
-                    provider = new ethers.providers.Web3Provider(window.ethereum);
-                    signer = provider.getSigner();
-                    userAddress = await signer.getAddress();
-                    
-                    document.getElementById('wallet-address').textContent = 
-                        userAddress.substring(0, 6) + '...' + userAddress.substring(38);
-                    document.getElementById('connect-wallet-btn').style.display = 'none';
-                    document.getElementById('wallet-info').style.display = 'block';
-                    
-                    console.log('✅ Wallet connected:', userAddress);
-                    return true;
-                } catch (error) {
-                    console.error('❌ Error connecting wallet:', error);
-                    alert('Errore di connessione al wallet. Assicurati di avere MetaMask installato.');
-                    return false;
-                }
-            } else {
-                alert('MetaMask non trovato! Installa MetaMask per connetterti.');
-                window.open('https://metamask.io/download/', '_blank');
-                return false;
-            }
-        }
-
-        // Direct Marketplace Links with Wallet Check
-        async function openMarketplace(marketplace, collectionUrl) {
-            const connected = userAddress || await connectWallet();
-            if (connected) {
-                window.open(collectionUrl, '_blank');
-            }
-        }
-
-        // Marketplace URLs
-        const marketplaces = {
-            superrare: 'https://superrare.com/gen_e1799',
-            zora: 'https://zora.co/@gene1799',
-            opensea: 'https://opensea.io/gen_e1799',
-            rarible: 'https://og.rarible.com/gen_e1799/owned',
-            foundation: 'https://foundation.app/@gen_e1799',
-            crypto: 'https://crypto.com/nft/profile/gen_e1799?tab=created'
-        };
-
-        // Add event listeners when DOM is loaded
-        document.addEventListener('DOMContentLoaded', function() {
-            // Add Web3 buttons to marketplace section
-            const nftLinksContainer = document.querySelector('.nft-links');
-            if (nftLinksContainer) {
-                nftLinksContainer.innerHTML = `
-                    <button id="connect-wallet-btn" class="btn" onclick="connectWallet()" style="background: #00ff41; color: #0a0e27; font-weight: bold;">🦊 Connect MetaMask</button>
-                    <div id="wallet-info" style="display: none; background: rgba(0, 255, 65, 0.1); border: 2px solid #00ff41; padding: 15px; margin: 20px 0; text-align: center;">
-                        <p style="font-size: 1.2em; margin-bottom: 10px;">✅ Wallet Connected</p>
-                        <p style="font-size: 1em;">Address: <span id="wallet-address"></span></p>
-                    </div>
-                    <a href="#" class="btn" onclick="openMarketplace('zora', marketplaces.zora); return false;">🌐 Buy on Zora</a>
-                    <a href="#" class="btn" onclick="openMarketplace('superrare', marketplaces.superrare); return false;">💎 Buy on SuperRare</a>
-                    <a href="#" class="btn" onclick="openMarketplace('opensea', marketplaces.opensea); return false;">🌊 Buy on OpenSea</a>
-                    <a href="#" class="btn" onclick="openMarketplace('rarible', marketplaces.rarible); return false;">🎨 Buy on Rarible</a>
-                    <a href="#" class="btn" onclick="openMarketplace('foundation', marketplaces.foundation); return false;">🏛️ Buy on Foundation</a>
-                    <a href="#" class="btn" onclick="openMarketplace('crypto', marketplaces.crypto); return false;">💰 Buy on Crypto.com</a>
-                `;
-            }
-
-            // Check if wallet is already connected
-            if (typeof window.ethereum !== 'undefined') {
-                window.ethereum.request({ method: 'eth_accounts' })
-                    .then(accounts => {
-                        if (accounts.length > 0) {
-                            connectWallet();
-                        }
-                    });
-            }
-        });
-
-        // Listen for account changes
+    async function connectWallet() {
         if (typeof window.ethereum !== 'undefined') {
-            window.ethereum.on('accountsChanged', function (accounts) {
-                if (accounts.length > 0) {
-                    connectWallet();
-                } else {
-                    document.getElementById('connect-wallet-btn').style.display = 'block';
-                    document.getElementById('wallet-info').style.display = 'none';
-                    userAddress = null;
-                }
-            });
+            try {
+                const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const account = accounts[0];
+                connectBtn.innerHTML = account.substring(0, 6) + '...' + account.substring(38);
+                connectBtn.style.background = 'var(--green)';
+                connectBtn.style.color = '#000';
+            } catch (error) {
+                console.error(error);
+            }
+        } else {
+            alert('Please install MetaMask!');
         }
-    </script>
+    }
+
+    connectBtn.addEventListener('click', connectWallet);
+</script>
+
+</body>
 </html>
